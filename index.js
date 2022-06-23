@@ -17,7 +17,13 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('user-join', data.userId)
   })
 
+  socket.on('leave-room', (data) => {
+    socket.leave(data.roomId)
+    socket.broadcast.emit('user-leave', data.userId)
+  })
+
   socket.on('disconnect', (data) => {
+    socket.leave(data.roomId)
     socket.broadcast.emit('user-leave', data.userId)
   })
 })
