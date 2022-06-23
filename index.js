@@ -18,8 +18,8 @@ io.on('connection', (socket) => {
   })
 
   socket.on('leave-room', (data) => {
-    socket.leave(data.roomId)
     socket.broadcast.emit(`${data.roomId}:user-leave`, data.userId)
+    socket.leave(data.roomId)
   })
 
   // socket.on('disconnect', (socket) => {
