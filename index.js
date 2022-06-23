@@ -14,18 +14,17 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
   socket.on('join-room', (data) => {
     socket.join(data.roomId)
-    socket.broadcast.emit('user-join', data.userId)
+    socket.broadcast.emit(`${data.roomId}:user-join`, data.userId)
   })
 
   socket.on('leave-room', (data) => {
     socket.leave(data.roomId)
-    socket.broadcast.emit('user-leave', data.userId)
+    socket.broadcast.emit(`${data.roomId}:user-leave`, data.userId)
   })
 
-  socket.on('disconnect', (data) => {
-    socket.leave(data.roomId)
-    socket.broadcast.emit('user-leave', data.userId)
-  })
+  // socket.on('disconnect', (socket) => {
+  //   socket.broadcast.emit(`user-leave-${data.roomId}`, data.userId)
+  // })
 })
 
 httpServer.listen(3010, () => {
